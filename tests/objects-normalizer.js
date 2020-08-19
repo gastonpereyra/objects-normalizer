@@ -3,9 +3,9 @@
 const assert = require('assert');
 const sandbox = require('sinon');
 
-const PACKAGE_NAME = require('PACKAGE_NAME');
+const ObjectsNormalizer = require('../lib/index');
 
-describe('PACKAGE_NAME', () => {
+describe('objects-normalizer', () => {
 
     context('When Some condition', () => {
         
