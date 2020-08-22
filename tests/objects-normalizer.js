@@ -1,23 +1,23 @@
 'use strict';
 
-const assert = require('assert');
-const sandbox = require('sinon');
+/* const assert = require('assert');
 
-const ObjectsNormalizer = require('../lib/index');
+const { objectsNormalizer } = require('../lib/index');
 
-describe('objects-normalizer', () => {
+describe('Objects-Normalizer Function', () => {
 
-    context('When Some condition', () => {
-        
-        it('Should return something', () => {
+	context('When Some condition', () => {
 
-        })
-    })
+		it('Should return something', () => {
 
-    context('When Other condition', () => {
-        
-        it('Should reject otherthing', () => {
+		});
+	});
 
-        })
-    })
-})
+	context('When Other condition', () => {
+
+		it('Should reject otherthing', () => {
+
+		});
+	});
+});
+ */
