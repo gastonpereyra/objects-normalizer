@@ -1,8 +1,8 @@
 {
   "name": "objects-normalizer",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Normalizes object keys, to have all the same ones",
-  "main": "lib/index.js",
+  "main": "lib/objects-normalizer.js",
   "files": [
     "lib/"
   ],

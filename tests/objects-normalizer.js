@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const { objectsNormalizer } = require('../lib/index');
+const objectsNormalizer = require('../lib/objects-normalizer');
 
 describe('Objects-Normalizer Function', () => {
 

@@ -13,15 +13,119 @@ Normalizes object keys, to have all the same ones
 npm i objects-normalizer
 ```
 
-## Methods
+## Params
+
+### items
+
+*Object* or *Array of Objects*.
+
+The set of data to normalize.
+
+* If set is empty, return an empty list.
+* If only one object is passed, only one object is return
+* List of objects, returns a list of objects
+
+### options
+
+*Object*. The way to normalize.
+
+* **fieldsToKeep**: *array of strings*, list of fields to keep after formatting.
+* **fieldsToRemove**: *array of strings*, list of fields to remove.
+
+* Only one of them, if both is passed, **fieldsToKeep** has priority, an will be considered the only option.
+* If any of them is passed, or another non-supported property, or nothing is passed, will return the same object or objects without modifications.
 
 ## Usage
+
+### objectNormalizer(items)
+
+Items without any option or valid options.
 
 ```js
 const objectsNormalizer = require('objects-normalizer');
 
+objectsNormalizer({ name: 'Bruce Wayne', alterego: 'Batman', superPower: 'money' });
+
+// It's equivalent
+objectsNormalizer({ name: 'Bruce Wayne', alterego: 'Batman', superPower: 'money' }, {});
+objectsNormalizer({ name: 'Bruce Wayne', alterego: 'Batman', superPower: 'money' }, { fieldsToDuplicate: ['city']});
+
 /*
-output: 
+    output: 
+    {
+        name: 'Bruce Wayne',
+        alterego: 'Batman',
+        superPower: 'money'
+    }
 */
 ```
-## Extra
+
+### objectsNormalizer(items, { fieldsToKeep: [fields] })
+
+Format items to only keep some fields. If these fields not exist in the items, will not be added.
+
+```js
+const objectsNormalizer = require('objects-normalizer');
+
+const superHeroes = [
+    { name: 'Bruce Wayne', alterego: 'Batman', superPower: 'money', city: 'Gotham' },
+    { name: 'Peter Parker', alterego: 'Spiderman', superPower: 'spider things but stronger', city: 'New York' },
+    { name: 'Zatanna Zatara', alterego: 'Zatanna', superPower: 'magic'},
+    { name: 'Ororo Monroe', alterego: 'Storm', superPower: 'weather control' }
+];
+
+objectsNormalizer(superHeroes, { fieldsToKeep:['name', 'city'] });
+
+// It's equivalent
+objectsNormalizer(superHeroes, { fieldsToKeep:['name', 'city'], fieldsToRemove: ['alterego', 'superPower'] });
+objectsNormalizer(superHeroes, { fieldsToKeep:['name', 'city'], fieldsToRemove: ['name', 'city'] });
+
+/*
+    output: 
+    [
+        { name: 'Bruce Wayne', city: 'Gotham' },
+        { name: 'Peter Parker', city: 'New York' },
+        { name: 'Zatanna Zatara' },
+        { name: 'Ororo Monroe' }
+    ]
+*/
+
+objectsNormalizer(superHeroes[0], { fieldsToKeep:['name', 'city'] });
+
+/*
+    output: { name: 'Bruce Wayne', city: 'Gotham' }
+*/
+```
+
+### objectsNormalizer(items, { fieldsToRemove: [fields] })
+
+Format items to remove some fields and keep the others.
+
+```js
+const objectsNormalizer = require('objects-normalizer');
+
+const superHeroes = [
+    { name: 'Bruce Wayne', alterego: 'Batman', superPower: 'money', city: 'Gotham' },
+    { name: 'Peter Parker', alterego: 'Spiderman', superPower: 'spider things but stronger', city: 'New York' },
+    { name: 'Zatanna Zatara', alterego: 'Zatanna', superPower: 'magic'},
+    { name: 'Ororo Monroe', alterego: 'Storm', superPower: 'weather control' }
+];
+
+objectsNormalizer(superHeroes, { fieldsToRemove:['name', 'city'] });
+
+/*
+    output: 
+    [
+        { alterego: 'Batman', superPower: 'money' },
+        { alterego: 'Spiderman', superPower: 'spider things but stronger' },
+        { alterego: 'Zatanna', superPower: 'magic'},
+        { alterego: 'Storm', superPower: 'weather control' }
+    ]
+*/
+
+objectsNormalizer(superHeroes[0], { fieldsToRemove:['name', 'city'] });
+
+/*
+    output: { alterego: 'Batman', superPower: 'money' }
+*/
+```
