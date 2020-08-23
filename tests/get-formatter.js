@@ -108,13 +108,13 @@ describe('Get Formatters', () => {
 
 				it('Should get all fields if selects all fields', () => {
 
-					const formattedSample = getFormatter({ fieldsToRemove: Object.keys(sample) })(sample);
+					const formattedSample = getFormatter({ invalid: Object.keys(sample) })(sample);
 					assert.deepStrictEqual(formattedSample, sample);
 				});
 
 				it('Should get all fields if selects all fields existing and more not-existings', () => {
 
-					const formattedSample = getFormatter({ fieldsToRemove: [...Object.keys(sample), 'other'] })(sample);
+					const formattedSample = getFormatter({ invalid: [...Object.keys(sample), 'other'] })(sample);
 					assert.deepStrictEqual(formattedSample, sample);
 				});
 
@@ -122,14 +122,14 @@ describe('Get Formatters', () => {
 
 					Object.keys(sample).forEach(fieldSelected => {
 
-						const formattedSample = getFormatter({ fieldsToRemove: [fieldSelected] })(sample);
+						const formattedSample = getFormatter({ invalid: [fieldSelected] })(sample);
 						assert.deepStrictEqual(formattedSample, sample);
 					});
 				});
 
 				it('Should get all fields if nothing is selected', () => {
 
-					const formattedSample = getFormatter({ fieldsToRemove: [] })(sample);
+					const formattedSample = getFormatter({ invalid: [] })(sample);
 					assert.deepStrictEqual(formattedSample, sample);
 				});
 			});
