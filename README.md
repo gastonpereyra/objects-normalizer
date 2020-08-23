@@ -4,6 +4,8 @@
 ![Build Status](https://github.com/gastonpereyra/objects-normalizer/workflows/Build%20Status/badge.svg)
 [![Coverage Status](https://img.shields.io/coveralls/github/gastonpereyra/objects-normalizer/master.svg)](https://coveralls.io/r/gastonpereyra/objects-normalizer?branch=master)
 
+![npm-object-normalizer](https://user-images.githubusercontent.com/39351850/90986214-66554080-e557-11ea-9497-8262238b8e08.png)
+
 ## Description
 Normalizes object keys, to have all the same ones
 
@@ -21,19 +23,71 @@ npm i objects-normalizer
 
 The set of data to normalize.
 
+#### Conditions
+
 * If set is empty, return an empty list.
 * If only one object is passed, only one object is return
 * List of objects, returns a list of objects
 
+#### Examples
+
+Single Object
+
+```json
+{
+    "name": "Kamala Khan",
+    "alterego": "Miss Marvel",
+    "superpower": "super-stretch"
+}
+
+```
+
+List of Objects
+
+```json
+[
+    {
+        "name": "Kamala Khan",
+        "alterego": "Miss Marvel",
+        "superpower": "super-stretch"
+    },
+    {
+        "name": "Lois Lane",
+        "alterego": "Lois Lane",
+        "superpower": "press",
+        "city": "Metropolis"
+    },
+]
+
+```
+
 ### options
 
-*Object*. The way to normalize.
+*Object*.
 
-* **fieldsToKeep**: *array of strings*, list of fields to keep after formatting.
-* **fieldsToRemove**: *array of strings*, list of fields to remove.
+The way to normalize.
 
-* Only one of them, if both is passed, **fieldsToKeep** has priority, an will be considered the only option.
+* `fieldsToKeep`: *array of strings*, list of fields to keep after formatting.
+* `fieldsToRemove`: *array of strings*, list of fields to remove.
+
+#### Conditions
+
+* Only one of them, if both is passed, `fieldsToKeep` has priority, an will be considered the only option.
 * If any of them is passed, or another non-supported property, or nothing is passed, will return the same object or objects without modifications.
+
+#### Examples
+
+```json
+{
+    "fieldsToKeep": ["name", "city"]
+}
+```
+
+```json
+{
+    "fieldsToRemove": ["name", "city"]
+}
+```
 
 ## Usage
 
