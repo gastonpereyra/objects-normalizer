@@ -1,58 +1,185 @@
-# Template NPM Packages
+# objects-normalizer
 
-![npm-template](https://user-images.githubusercontent.com/39351850/89736287-af2cd580-da3e-11ea-86f2-f1829c3fafdf.png)
+## Code Quality Status
+![Build Status](https://github.com/gastonpereyra/objects-normalizer/workflows/Build%20Status/badge.svg)
+[![Coverage Status](https://img.shields.io/coveralls/github/gastonpereyra/objects-normalizer/master.svg)](https://coveralls.io/r/gastonpereyra/objects-normalizer?branch=master)
 
-## :loudspeaker: Description
-This is a template repository to make easier configurate NPM package repositories
+![npm-object-normalizer](https://user-images.githubusercontent.com/39351850/90986214-66554080-e557-11ea-9497-8262238b8e08.png)
 
-## :floppy_disk: Installation
+## Description
+Normalizes object keys, to have all the same ones
 
-Steps :walking: :
+## Installation
 
-1. :chestnut: In the *Top-Navbar*, at right corner, on *+*, click **new Repository**
+```
+npm i objects-normalizer
+```
 
-![New Repository](https://user-images.githubusercontent.com/39351850/89736268-83115480-da3e-11ea-988d-066ce80f88b9.png)
+## Params
 
-2. :seedling: In *Repository Template*, open menu, click *npm-template*
+### items
 
-![Use Template](https://user-images.githubusercontent.com/39351850/89736261-7ee53700-da3e-11ea-855f-f6ef9162b609.png)
+*Object* or *Array of Objects*.
 
-3. :four_leaf_clover: Fill the **Repository Name**
-4. :blossom: Add a **Description**
-5. :bouquet: Click **Create Repository**
+The set of data to normalize.
 
-## :white_check_mark: Content
+#### Conditions
 
-<details>
- <summary><b> :bookmark: NPM - `package.json` </b></summary>
+* If set is empty, return an empty list.
+* If only one object is passed, only one object is return
+* List of objects, returns a list of objects
 
-* `Mocha` and `Sinon` testings dependencies, and `test` / `test-ci` script
-* `Nyc` coverage dependency, `.nycrc` file and `coverage` script
-* `eslint` and `eslint-airbnb` linter dependencies and `.eslintrc.js` file
-* `root/lib/` as file container
+#### Examples
 
-</details>
+Single Object
 
-<details>
- <summary><b> :bar_chart: Actions Workflows </b></summary>
+```json
+{
+    "name": "Kamala Khan",
+    "alterego": "Miss Marvel",
+    "superpower": "super-stretch"
+}
 
-* Build Status to run tests, on every branches
-* Coverage status to generate Coveralls badge on push and PR
-* Linter status for push and PR
-* NPM publish on releases
+```
 
-</details>
+List of Objects
 
-<details>
- <summary><b> :scroll: README Template </b></summary>
+```json
+[
+    {
+        "name": "Kamala Khan",
+        "alterego": "Miss Marvel",
+        "superpower": "super-stretch"
+    },
+    {
+        "name": "Lois Lane",
+        "alterego": "Lois Lane",
+        "superpower": "press",
+        "city": "Metropolis"
+    },
+]
 
-* Some Block pre-build
-* Build Status and Coverage Status badges
-* Must change `tpl` extension for `md`
+```
 
-</details>
+### options
 
-#  :pencil: References
+*Object*.
 
-* Templates in :us: [Click HERE!!!!!](https://docs.github.com/en/github/managing-your-work-on-github/about-project-boards)
-* Templates en :es: [Click ACA!!!!!](https://docs.github.com/es/github/creating-cloning-and-archiving-repositories/creating-a-template-repository)
+The way to normalize.
+
+* `fieldsToKeep`: *array of strings*, list of fields to keep after formatting.
+* `fieldsToRemove`: *array of strings*, list of fields to remove.
+
+#### Conditions
+
+* Only one of them, if both is passed, `fieldsToKeep` has priority, an will be considered the only option.
+* If any of them is passed, or another non-supported property, or nothing is passed, will return the same object or objects without modifications.
+
+#### Examples
+
+```json
+{
+    "fieldsToKeep": ["name", "city"]
+}
+```
+
+```json
+{
+    "fieldsToRemove": ["name", "city"]
+}
+```
+
+## Usage
+
+### objectNormalizer(items)
+
+Items without any option or valid options.
+
+```js
+const objectsNormalizer = require('objects-normalizer');
+
+objectsNormalizer({ name: 'Bruce Wayne', alterego: 'Batman', superPower: 'money' });
+
+// It's equivalent
+objectsNormalizer({ name: 'Bruce Wayne', alterego: 'Batman', superPower: 'money' }, {});
+objectsNormalizer({ name: 'Bruce Wayne', alterego: 'Batman', superPower: 'money' }, { fieldsToDuplicate: ['city']});
+
+/*
+    output: 
+    {
+        name: 'Bruce Wayne',
+        alterego: 'Batman',
+        superPower: 'money'
+    }
+*/
+```
+
+### objectsNormalizer(items, { fieldsToKeep: [fields] })
+
+Format items to only keep some fields. If these fields not exist in the items, will not be added.
+
+```js
+const objectsNormalizer = require('objects-normalizer');
+
+const superHeroes = [
+    { name: 'Bruce Wayne', alterego: 'Batman', superPower: 'money', city: 'Gotham' },
+    { name: 'Peter Parker', alterego: 'Spiderman', superPower: 'spider things but stronger', city: 'New York' },
+    { name: 'Zatanna Zatara', alterego: 'Zatanna', superPower: 'magic'},
+    { name: 'Ororo Monroe', alterego: 'Storm', superPower: 'weather control' }
+];
+
+objectsNormalizer(superHeroes, { fieldsToKeep:['name', 'city'] });
+
+// It's equivalent
+objectsNormalizer(superHeroes, { fieldsToKeep:['name', 'city'], fieldsToRemove: ['alterego', 'superPower'] });
+objectsNormalizer(superHeroes, { fieldsToKeep:['name', 'city'], fieldsToRemove: ['name', 'city'] });
+
+/*
+    output: 
+    [
+        { name: 'Bruce Wayne', city: 'Gotham' },
+        { name: 'Peter Parker', city: 'New York' },
+        { name: 'Zatanna Zatara' },
+        { name: 'Ororo Monroe' }
+    ]
+*/
+
+objectsNormalizer(superHeroes[0], { fieldsToKeep:['name', 'city'] });
+
+/*
+    output: { name: 'Bruce Wayne', city: 'Gotham' }
+*/
+```
+
+### objectsNormalizer(items, { fieldsToRemove: [fields] })
+
+Format items to remove some fields and keep the others.
+
+```js
+const objectsNormalizer = require('objects-normalizer');
+
+const superHeroes = [
+    { name: 'Bruce Wayne', alterego: 'Batman', superPower: 'money', city: 'Gotham' },
+    { name: 'Peter Parker', alterego: 'Spiderman', superPower: 'spider things but stronger', city: 'New York' },
+    { name: 'Zatanna Zatara', alterego: 'Zatanna', superPower: 'magic'},
+    { name: 'Ororo Monroe', alterego: 'Storm', superPower: 'weather control' }
+];
+
+objectsNormalizer(superHeroes, { fieldsToRemove:['name', 'city'] });
+
+/*
+    output: 
+    [
+        { alterego: 'Batman', superPower: 'money' },
+        { alterego: 'Spiderman', superPower: 'spider things but stronger' },
+        { alterego: 'Zatanna', superPower: 'magic'},
+        { alterego: 'Storm', superPower: 'weather control' }
+    ]
+*/
+
+objectsNormalizer(superHeroes[0], { fieldsToRemove:['name', 'city'] });
+
+/*
+    output: { alterego: 'Batman', superPower: 'money' }
+*/
+```
