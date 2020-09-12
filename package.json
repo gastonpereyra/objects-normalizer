@@ -1,6 +1,6 @@
 {
   "name": "objects-normalizer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Normalizes object keys, to have all the same ones",
   "main": "lib/objects-normalizer.js",
   "files": [
@@ -34,6 +34,6 @@
     "nyc": "^15.1.0"
   },
   "dependencies": {
-    "press-f": "^1.0.0"
+    "press-f": "^1.1.0"
   }
 }

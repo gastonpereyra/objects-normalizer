@@ -16,6 +16,14 @@ describe('Objects-Normalizer Function', () => {
 			});
 		});
 
+		it('Should reject if items is not an Array of Objects', () => {
+
+			assert.throws(() => objectsNormalizer([1]), {
+				name: 'ObjectNormalizerError',
+				message: 'Invalid Items must be an Object or Array of Objects'
+			});
+		});
+
 		it('Should reject if options is not an Object', () => {
 
 			assert.throws(() => objectsNormalizer({}, 'notValid'), {
