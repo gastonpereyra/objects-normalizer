@@ -1,7 +1,7 @@
 ---
 name: Bug
 about: To Report Bugs
-title: "[BUG]"
+title: "[BUG] ON -"
 labels: bug
 assignees: gastonpereyra
 
