@@ -22,6 +22,11 @@ describe('Objects-Normalizer Function', () => {
 				name: 'ObjectNormalizerError',
 				message: 'Invalid Items must be an Object or Array of Objects'
 			});
+
+			assert.throws(() => objectsNormalizer([[{}]]), {
+				name: 'ObjectNormalizerError',
+				message: 'Invalid Items must be an Object or Array of Objects'
+			});
 		});
 
 		it('Should reject if options is not an Object', () => {
@@ -226,7 +231,6 @@ describe('Objects-Normalizer Function', () => {
 
 					return resultSample;
 				});
-
 
 				assert.deepStrictEqual(formattedSamples, resultSamples);
 			});
