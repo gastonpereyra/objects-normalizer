@@ -23,7 +23,7 @@ describe('Objects-Normalizer Function', () => {
 				message: 'Invalid Items must be an Object or Array of Objects'
 			});
 
-			assert.throws(() => objectsNormalizer([[{}]]), {
+			assert.throws(() => objectsNormalizer([[{}], 1]), {
 				name: 'ObjectNormalizerError',
 				message: 'Invalid Items must be an Object or Array of Objects'
 			});
