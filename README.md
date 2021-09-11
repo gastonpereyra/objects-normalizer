@@ -1,4 +1,4 @@
-# objects-normalizer
+# Objects Normalizer
 
 ## Code Quality Status
 ![Build Status](https://github.com/gastonpereyra/objects-normalizer/workflows/Build%20Status/badge.svg)

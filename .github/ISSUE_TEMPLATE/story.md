@@ -1,7 +1,7 @@
 ---
 name: Story
 about: Story to organize development
-title: "[STORY] ON - NUMBER"
+title: "[Object Normalizer] - Package -"
 labels: enhancement
 assignees: gastonpereyra
 
